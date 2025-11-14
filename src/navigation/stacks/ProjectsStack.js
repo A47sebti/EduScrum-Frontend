@@ -1,11 +1,13 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator as createWebStackNavigator } from '@react-navigation/stack';
 import ProjectsList from '../../screens/projects/ProjectsList';
 import ProjectDetail from '../../screens/projects/ProjectDetail';
 import ProjectCreate from '../../screens/projects/ProjectCreate';
 import ProjectEdit from '../../screens/projects/ProjectEdit';
 
-const Stack = createNativeStackNavigator();
+const Stack = Platform.OS === 'web' ? createWebStackNavigator() : createNativeStackNavigator();
 
 export default function ProjectsStack() {
   return (

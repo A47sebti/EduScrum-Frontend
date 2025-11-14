@@ -3,6 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
 import Placeholder from '../screens/common/Placeholder';
+import ChatScreen from '../screens/chat/ChatScreen';
+import NotificationsScreen from '../screens/notifications/NotificationsScreen';
 import TeamsStack from './stacks/TeamsStack';
 import ProjectsStack from './stacks/ProjectsStack';
 import SprintsStack from './stacks/SprintsStack';
@@ -38,7 +40,7 @@ function SMTabs() {
       <Tab.Screen name="Projects" component={ProjectsStack} />
       <Tab.Screen name="Sprints" component={SprintsStack} />
       <Tab.Screen name="Ceremonies" component={CeremoniesStack} />
-      <Tab.Screen name="Chat" component={() => <Placeholder title="Chat" />} />
+      <Tab.Screen name="Chat" component={ChatScreen} />
       <Tab.Screen name="Profile" component={() => <Placeholder title="Profile" />} />
     </Tab.Navigator>
   );
@@ -67,7 +69,7 @@ function POTabs() {
       <Tab.Screen name="Backlog" component={BacklogStack} />
       <Tab.Screen name="Stories" component={StoriesStack} />
       <Tab.Screen name="Sprints" component={SprintsStack} />
-      <Tab.Screen name="Chat" component={() => <Placeholder title="Chat" />} />
+      <Tab.Screen name="Chat" component={ChatScreen} />
       <Tab.Screen name="Profile" component={() => <Placeholder title="Profile" />} />
     </Tab.Navigator>
   );
@@ -93,8 +95,8 @@ function DevTabs() {
     >
       <Tab.Screen name="Board" component={BoardStack} />
       <Tab.Screen name="MyTasks" component={MyTasksStack} />
-      <Tab.Screen name="Chat" component={() => <Placeholder title="Chat" />} />
-      <Tab.Screen name="Notifications" component={() => <Placeholder title="Notifications" />} />
+      <Tab.Screen name="Chat" component={ChatScreen} />
+      <Tab.Screen name="Notifications" component={NotificationsScreen} />
       <Tab.Screen name="Profile" component={() => <Placeholder title="Profile" />} />
     </Tab.Navigator>
   );

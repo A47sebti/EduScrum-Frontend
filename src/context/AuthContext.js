@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import * as SecureStore from 'expo-secure-store';
+import { getItem } from '../services/storage';
 import { getProfile, login as apiLogin, logout as apiLogout, register as apiRegister } from '../services/api/auth';
 
 const AuthContext = createContext(null);
@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
     let mounted = true;
     (async () => {
       try {
-        const token = await SecureStore.getItemAsync('accessToken');
+        const token = await getItem('accessToken');
         if (token) {
           const profile = await getProfile();
           if (mounted) setUser(profile?.user || profile);

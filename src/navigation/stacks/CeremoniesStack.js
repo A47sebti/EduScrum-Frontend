@@ -1,11 +1,13 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator as createWebStackNavigator } from '@react-navigation/stack';
 import CeremoniesList from '../../screens/ceremonies/CeremoniesList';
 import CeremonyDetail from '../../screens/ceremonies/CeremonyDetail';
 import CeremonyCreate from '../../screens/ceremonies/CeremonyCreate';
 import CeremonyEdit from '../../screens/ceremonies/CeremonyEdit';
 
-const Stack = createNativeStackNavigator();
+const Stack = Platform.OS === 'web' ? createWebStackNavigator() : createNativeStackNavigator();
 
 export default function CeremoniesStack() {
   return (

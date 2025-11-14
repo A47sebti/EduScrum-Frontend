@@ -1,5 +1,7 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator as createWebStackNavigator } from '@react-navigation/stack';
 import TeamsList from '../../screens/teams/TeamsList';
 import TeamDetail from '../../screens/teams/TeamDetail';
 import TeamCreate from '../../screens/teams/TeamCreate';
@@ -8,7 +10,7 @@ import TeamMembers from '../../screens/teams/TeamMembers';
 import AssignRole from '../../screens/teams/AssignRole';
 import TeamEdit from '../../screens/teams/TeamEdit';
 
-const Stack = createNativeStackNavigator();
+const Stack = Platform.OS === 'web' ? createWebStackNavigator() : createNativeStackNavigator();
 
 export default function TeamsStack() {
   return (

@@ -20,13 +20,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      "edgeToEdgeEnabled": true,
+      "package": "com.anonymous.eduscrumfrontend"
     },
     "plugins": [
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-notifications"
     ]
   }
 }

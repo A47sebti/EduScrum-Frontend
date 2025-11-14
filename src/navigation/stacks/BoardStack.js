@@ -1,11 +1,13 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator as createWebStackNavigator } from '@react-navigation/stack';
 import BoardScreen from '../../screens/board/BoardScreen';
 import StoryDetail from '../../screens/stories/StoryDetail';
 import StoryEdit from '../../screens/stories/StoryEdit';
 import StoryCreate from '../../screens/stories/StoryCreate';
 
-const Stack = createNativeStackNavigator();
+const Stack = Platform.OS === 'web' ? createWebStackNavigator() : createNativeStackNavigator();
 
 export default function BoardStack() {
   return (

@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, ScrollView, Platform } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Text, Card, ActivityIndicator, Snackbar, IconButton, Button, Portal, Dialog, Searchbar, List, Divider, FAB, Avatar } from 'react-native-paper';
 import { getStories, updateStory } from '../../services/api/stories';
 import { getProjects } from '../../services/api/projects';
 import { getSprints } from '../../services/api/sprints';
 import { useAuth } from '../../context/AuthContext';
-// DnD (web only)
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { connectSocket, joinProject, leaveProject, joinTeam, leaveTeam } from '../../services/socket/client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -427,73 +425,23 @@ export default function BoardScreen({ navigation }) {
         </View>
       </View>
 
-      {Platform.OS === 'web' ? (
-        <DragDropContext
-          onDragEnd={({ source, destination }) => {
-            if (!destination) return;
-            const fromKey = source.droppableId;
-            const toKey = destination.droppableId;
-            const fromList = columns[fromKey] || [];
-            const dragged = fromList[source.index];
-            if (!dragged) return;
-            moveStory(dragged, fromKey, toKey);
-          }}
-        >
-          <ScrollView horizontal showsHorizontalScrollIndicator style={{ flex: 1 }} contentContainerStyle={{ paddingHorizontal: 8 }}>
-            {COLUMNS.map((col) => (
-              <View key={col.key} style={{ width: 320, paddingHorizontal: 8 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
-                  <IconButton icon={col.icon} />
-                  <Text variant="titleMedium">{col.title}</Text>
-                </View>
-                <Droppable droppableId={col.key}>
-                  {(provided) => (
-                    <View ref={provided.innerRef} {...provided.droppableProps}>
-                      {columns[col.key].length === 0 ? (
-                        <Text style={{ opacity: 0.6 }}>Aucune story</Text>
-                      ) : (
-                        columns[col.key].map((item, index) => (
-                          <Draggable key={String(item.id)} draggableId={String(item.id)} index={index}>
-                            {(dragProvided) => (
-                              <View
-                                ref={dragProvided.innerRef}
-                                {...dragProvided.draggableProps}
-                                {...dragProvided.dragHandleProps}
-                                style={{ ...(dragProvided.draggableProps.style || {}), marginBottom: 8 }}
-                              >
-                                {renderCard(item, col.key)}
-                              </View>
-                            )}
-                          </Draggable>
-                        ))
-                      )}
-                      {provided.placeholder}
-                    </View>
-                  )}
-                </Droppable>
-              </View>
-            ))}
-          </ScrollView>
-        </DragDropContext>
-      ) : (
-        <ScrollView horizontal showsHorizontalScrollIndicator style={{ flex: 1 }} contentContainerStyle={{ paddingHorizontal: 8 }}>
-          {COLUMNS.map((col) => (
-            <View key={col.key} style={{ width: 320, paddingHorizontal: 8 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
-                <IconButton icon={col.icon} />
-                <Text variant="titleMedium">{col.title}</Text>
-              </View>
-              {columns[col.key].length === 0 ? (
-                <Text style={{ opacity: 0.6 }}>Aucune story</Text>
-              ) : (
-                columns[col.key].map((item) => (
-                  <View key={String(item.id)}>{renderCard(item, col.key)}</View>
-                ))
-              )}
+      <ScrollView horizontal showsHorizontalScrollIndicator style={{ flex: 1 }} contentContainerStyle={{ paddingHorizontal: 8 }}>
+        {COLUMNS.map((col) => (
+          <View key={col.key} style={{ width: 320, paddingHorizontal: 8 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+              <IconButton icon={col.icon} />
+              <Text variant="titleMedium">{col.title}</Text>
             </View>
-          ))}
-        </ScrollView>
-      )}
+            {columns[col.key].length === 0 ? (
+              <Text style={{ opacity: 0.6 }}>Aucune story</Text>
+            ) : (
+              columns[col.key].map((item) => (
+                <View key={String(item.id)}>{renderCard(item, col.key)}</View>
+              ))
+            )}
+          </View>
+        ))}
+      </ScrollView>
 
       {canManage && (
         <FAB
